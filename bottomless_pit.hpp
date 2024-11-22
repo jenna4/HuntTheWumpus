@@ -12,7 +12,6 @@ class pit : public event {
     public: 
     void percept();
     void encounter(bool&);
-    event* clone();
 
     // da big 3
     pit();

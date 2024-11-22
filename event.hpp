@@ -17,7 +17,6 @@ public:
 	void print_sym();
 	virtual void percept() = 0;
 	virtual void encounter(bool&) = 0;
-	virtual event* clone() = 0;
 
 };
 

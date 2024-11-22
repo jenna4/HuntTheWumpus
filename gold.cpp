@@ -27,8 +27,5 @@ void gold::encounter(bool& bgold) {
     bgold = true;
 }
 
-event* gold::clone() {
-    return new gold(*this);
-}
 
 

@@ -34,6 +34,3 @@ void pit::encounter(bool& blife) {
     }
 }
 
-event* pit::clone() {
-    return new pit(*this);
-}

@@ -24,7 +24,3 @@ void wumpus::encounter(bool& blife) {
     blife = false;
 }
 
-event* wumpus::clone() {
-    return new wumpus(*this);
-}
-
