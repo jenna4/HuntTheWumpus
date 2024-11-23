@@ -14,6 +14,7 @@ class arrow : public event {
     arrow();
     arrow& operator=(const arrow&);
     arrow(const arrow&);
+    event* clone();
 };
 
 

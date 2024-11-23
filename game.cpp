@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 #include "game.hpp"
 #include "gold.hpp"
@@ -20,10 +22,26 @@ game::game(int width, int height, bool debug) :
 		height(height),
 		debug(debug) {
 	// TODO Create the game board: 2D vector of room objects
-
+	board = vector<vector<Room> >(height, vector<Room>(width));
 	// TODO Randomly insert events (2 bat_swarms, 2 bottomless_pits,
 	// 1 wumpus, 1 gold, 2 arrows, 1 escape rope) into the board
 }
+
+void game::insert_e(event* e) {
+	int x, y;
+	//store random coords to assign
+		x = rand() % width;
+		y = rand() % height;
+	// checks to make sure room at cords is empty
+	while(!(this->board[x][y].empty_room())) {
+		x = rand() % width;
+		y = rand() % height;
+	}
+	// assgins the event pointer to new pointer
+	this->board[x][y].apply_event(e);
+}
+
+//game inserrt function
 
 void game::display_game() const{
 	cout << endl << endl;

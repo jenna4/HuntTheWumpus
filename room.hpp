@@ -13,8 +13,8 @@ private:
 
 public:
 	// TODO public members
-	bool get_has_adventurer;
-	bool get_has_rope;
+	bool get_has_adventurer() const;
+	bool get_has_rope() const;
 
 	void set_has_rope(const bool);
 	bool empty_room() const;
@@ -24,7 +24,7 @@ public:
 	void print_event_sym() const;
 
 	void percept();
-	void encounter(bool&, bool&, bool&);
+	void encounter(bool&, bool&, bool&, bool&);
 
 	Room();
 	Room& operator=(const Room&);

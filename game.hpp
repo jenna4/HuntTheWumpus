@@ -2,13 +2,14 @@
 #define GAME_HPP
 
 #include <vector>
-
+#include <iostream>
 #include "room.hpp"
 
 // game interface
 class game {
 private:
 	// TODO declare a 2D vector of Room objects:
+	vector <vector<Room> > board;
 
 	// Suggested member variables:
 	int num_arrows = 0; 	// keep track of number of arrows remaining
@@ -223,5 +224,9 @@ public:
 	void play_game();
 
 	// TODO Add more member functions here
+	void insert_e(event* e);
+
+
+
 };
 #endif

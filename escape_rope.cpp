@@ -27,3 +27,7 @@ void rope::encounter(bool& has_gold) {
         cout << "You found the escape rope, but you need the gold to escape!" << endl;
     }
 }
+
+event* rope::clone() {
+    return new rope(*this);
+}

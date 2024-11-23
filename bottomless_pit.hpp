@@ -17,7 +17,7 @@ class pit : public event {
     pit();
     pit& operator=(const pit&);
     pit(const pit&);
-
+    event* clone();
 };
 
 

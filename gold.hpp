@@ -17,7 +17,7 @@ class gold : public event {
     gold();
     gold& operator=(const gold&);
     gold(const gold&);
-
+    event* clone();
 };
 
 

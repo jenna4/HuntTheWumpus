@@ -15,8 +15,7 @@ class wumpus : public event {
     wumpus();
     wumpus& operator=(const wumpus&);
     wumpus(const wumpus&);
-
-
+    event* clone();
 };
 
 #endif

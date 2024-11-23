@@ -23,3 +23,7 @@ void bats::encounter(bool& confused) {
     cout << "You've entered a room with an angry bat swarm that confuses you, causing you to move in a random direction!" << endl;
     confused = true;
 }
+
+event* bats::clone() {
+    return new bats(*this);
+}

@@ -22,3 +22,7 @@ void arrow::encounter(bool& has_arrow) {
     cout << "You have picked up an arrow" << endl;
     has_arrow = true;
 }
+
+event* arrow::clone() {
+    return new arrow(*this);
+}

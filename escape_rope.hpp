@@ -15,6 +15,7 @@ class rope : public event {
     rope();
     rope& operator=(const rope&);
     rope(const rope&);
+    event* clone();
 };
 
 

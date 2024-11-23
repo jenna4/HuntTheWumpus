@@ -14,7 +14,7 @@ class bats : public event {
     bats();
     bats& operator=(const bats&);
     bats(const bats&);
-
+    event* clone();
 };
 
 
