@@ -315,29 +315,61 @@ char game::get_arrow_fire_direction() {
 void game::move_up() {
 	// TODO Delete the below placeholder code. Move the player up one
 	// space in the grid, however you choose to do that.
+	int x, y;
+	// get adventurer location
+	adv_loco(x, y);
 
-	cout << "game::move_up() is not implemented..." << endl;
+	// check if can move without going out of bounds
+	if (can_move_in_direction('w')) {
+		// update adventurer cords
+		board[x][y].adventurer_status();
+		board[x - 1][y].adventurer_status();
+	} else {
+		cout << "You cannot move up" << endl;
+	}
 }
 
 void game::move_down() {
 	// TODO Delete the below placeholder code. Move the player down one
 	// space in the grid, however you choose to do that.
+	int x, y;
+	adv_loco(x, y);
 
-	cout << "game::move_down() is not implemented..." << endl;
+	if (can_move_in_direction('s')) {
+		board[x][y].adventurer_status();
+		board[x + 1][y].adventurer_status();
+	} else {
+		cout << "You cannot move down" << endl;
+	}
 }
 
 void game::move_left() {
 	// TODO Delete the below placeholder code. Move the player left one
 	// space in the grid, however you choose to do that.
+	int x, y;
+	adv_loco(x, y);
 
-	cout << "game::move_left() is not implemented..." << endl;
+	if (can_move_in_direction('a')) {
+		board[x][y].adventurer_status();
+		board[x][y - 1].adventurer_status();
+	} else {
+		cout << "You cannot move left" << endl;
+	}
+
 }
 
 void game::move_right() {
 	// TODO Delete the below placeholder code. Move the player right one
 	// space in the grid, however you choose to do that.
+	int x, y;
+	adv_loco(x, y);
 
-	cout << "game::move_right() is not implemented..." << endl;
+	if (can_move_in_direction('d')) {
+		board[x][y].adventurer_status();
+		board[x][y + 1].adventurer_status();
+	} else {
+		cout << "You cannot move right" << endl;
+	}
 }
 
 void game::move(char direction) {
