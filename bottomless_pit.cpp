@@ -38,3 +38,8 @@ event* pit::clone() {
     return new pit(*this);
 }
 
+string pit::get_sym() const {
+    return this->symbol;
+}
+
+

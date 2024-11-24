@@ -27,3 +27,7 @@ void bats::encounter(bool& confused) {
 event* bats::clone() {
     return new bats(*this);
 }
+
+string bats::get_sym() const {
+    return this->symbol;
+}

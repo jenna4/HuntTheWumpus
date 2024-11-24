@@ -26,3 +26,8 @@ void arrow::encounter(bool& has_arrow) {
 event* arrow::clone() {
     return new arrow(*this);
 }
+
+string arrow::get_sym() const{
+    return this->symbol;
+}
+

@@ -18,6 +18,8 @@ private:
 	bool debug;				// debug mode or not
 	bool alive = true;		// if adventuer is alive
 	bool bgold = false;		// if adventuer has gold or not
+	bool confused = false;
+	bool barrow = false;
 
 	// TODO Feel free to add more member variables if you'd like
 
@@ -227,11 +229,13 @@ public:
 
 	// TODO Add more member functions here
 	void rand_cord(int& x, int& y);
+	void apply_rope(event* rope);
 	void insert_adventurer();
 	void insert_loco(event* e);
 	void insert();
 	void adv_loco(int& x, int& y) const;
-
+	void play();
+	void p_percepts();
 
 };
 #endif

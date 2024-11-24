@@ -15,6 +15,7 @@ class arrow : public event {
     arrow& operator=(const arrow&);
     arrow(const arrow&);
     event* clone();
+    string get_sym() const;
 };
 
 

@@ -16,6 +16,7 @@ class rope : public event {
     rope& operator=(const rope&);
     rope(const rope&);
     event* clone();
+    string get_sym() const;
 };
 
 

@@ -63,7 +63,7 @@ void game::insert_adventurer() {
 
 	// insert adventurer at the cords and set rope where adventuer is placed
 	this->board[x][y].adventurer_status();
-	this->board[x][y].set_has_rope(true);
+	this->board[x][y].apply_event(new rope);
 }
 
 //game inserrt function
@@ -179,7 +179,7 @@ bool game::check_win() const{
 		adv_loco(x, y);
 
 		// if adventuer in a room with the rope, adventuer escapes and wins
-		if(board[x][y].get_has_rope()) {
+		if(!board[x][y].empty_room() && board[x][y].get_event_sym() == "R") {
 			cout << "You escaped with the gold! You win!" << endl;
 			return true;
 		}
@@ -388,8 +388,23 @@ void game::fire_arrow_up() {
 	// TODO Delete the below placeholder code. Fire the arrow upward, killing
 	// the wumpus if it hits it or making the wumpus "wake up" and move
 	// randomly if it misses
-	
-	cout << "game::fire_arrow_up is not implemented..." << endl;
+	int x, y;
+	adv_loco(x, y);
+
+	for (int i = 3; i < 4; i++) {
+		// if room is nto empty
+		if(!(this->board[x - 1][y].empty_room())) {
+			if (this->board[x - 1][y].get_event_sym() == "W") {
+				this->board[x -1][y].apply_event(nullptr);
+				cout << "You hit and killed the Wumpus!" << endl;
+				// get out the function
+				return;
+			}
+		}
+	}
+	// if arrow misses
+	cout << "Your arrow missed." << endl;
+	// move wumpus 
 }
 
 void game::fire_arrow_down() {
@@ -430,6 +445,60 @@ void game::fire_arrow(char direction) {
 	this->num_arrows--;
 }
 
+void game::p_percepts() {
+	int x, y;
+	adv_loco(x, y);
+
+	// check if wall to north of the adventurer, makes sure row above exists
+	if(x - 1 >= 0) {
+		// if room not empty print evnt
+		if (!board[x - 1][y].empty_room()) {
+			board[x - 1][y].percept();
+		}
+	}
+
+	// check if wall to the left/west
+	if(y + 1 < width) {
+		if (!board[x][y + 1].empty_room()) {
+			board[x][y + 1].percept();
+		}
+	}
+
+	// check if wall to the south 
+	if (x + 1 < height) {
+		if (!board[x + 1][y].empty_room()) {
+			board[x + 1][y].percept();
+		}
+	}
+
+	// check if wall to the right/east
+	if (y - 1 >= 0) {
+		if (!board[x][y - 1].empty_room()) {
+			board[x][y - 1].percept();
+		}
+	}
+
+}
+
+void game::play() {
+	int x, y;
+	adv_loco(x, y);
+
+	if (!board[x][y].empty_room()) {
+		board[x][y].encounter(alive, bgold, confused, barrow);
+
+		// if adventurer has arrow, delte from board
+		if(barrow == true && board[x][y].get_event_sym() == "A") {
+			board[x][y].apply_event(nullptr);
+		}
+		// if adventurer picks up gold, delte form board
+		if(bgold == true && board[x][y].get_event_sym() == "G") {
+			board[x][y].apply_event(nullptr);
+		}
+	}
+
+}
+
 void game::play_game(){
 	while (!this->check_win() && !this->check_lose()) {
 		// Print game board
@@ -450,8 +519,7 @@ void game::play_game(){
 			char direction = this->get_arrow_fire_direction();
 			this->fire_arrow(direction);
 		}
-
 		// TODO If the user is on a space with an event, trigger its encounter
-
+		play();
 	}
 }

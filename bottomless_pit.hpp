@@ -18,6 +18,7 @@ class pit : public event {
     pit& operator=(const pit&);
     pit(const pit&);
     event* clone();
+    string get_sym() const;
 };
 
 

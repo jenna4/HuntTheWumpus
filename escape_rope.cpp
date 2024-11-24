@@ -31,3 +31,7 @@ void rope::encounter(bool& has_gold) {
 event* rope::clone() {
     return new rope(*this);
 }
+
+string rope::get_sym() const {
+    return this->symbol;
+}

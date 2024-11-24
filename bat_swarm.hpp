@@ -15,6 +15,7 @@ class bats : public event {
     bats& operator=(const bats&);
     bats(const bats&);
     event* clone();
+    string get_sym() const;
 };
 
 

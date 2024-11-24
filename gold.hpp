@@ -18,6 +18,7 @@ class gold : public event {
     gold& operator=(const gold&);
     gold(const gold&);
     event* clone();
+    string get_sym() const;
 };
 
 

@@ -31,3 +31,6 @@ event* gold::clone() {
     return new gold(*this);
 }
 
+string gold::get_sym() const {
+    return this->symbol;
+}

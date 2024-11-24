@@ -16,6 +16,7 @@ class wumpus : public event {
     wumpus& operator=(const wumpus&);
     wumpus(const wumpus&);
     event* clone();
+    string get_sym() const;
 };
 
 #endif

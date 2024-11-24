@@ -27,3 +27,7 @@ void wumpus::encounter(bool& blife) {
 event* wumpus::clone() {
     return new wumpus(*this);
 }
+
+string wumpus::get_sym() const {
+    return this->symbol;
+}
