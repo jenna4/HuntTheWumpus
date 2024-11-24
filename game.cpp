@@ -23,25 +23,67 @@ game::game(int width, int height, bool debug) :
 		debug(debug) {
 	// TODO Create the game board: 2D vector of room objects
 	board = vector<vector<Room> >(height, vector<Room>(width));
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			board[i][j] = Room();
+		}
+	}
 	// TODO Randomly insert events (2 bat_swarms, 2 bottomless_pits,
 	// 1 wumpus, 1 gold, 2 arrows, 1 escape rope) into the board
+	insert();
 }
 
-void game::insert_e(event* e) {
+void game::rand_cord(int& x, int& y) {
+	x = rand() % this->width;
+	y = rand() % this->height;
+}
+
+void game::insert_loco(event* e) {
 	int x, y;
 	//store random coords to assign
-		x = rand() % width;
-		y = rand() % height;
+	rand_cord(x, y);
 	// checks to make sure room at cords is empty
 	while(!(this->board[x][y].empty_room())) {
-		x = rand() % width;
-		y = rand() % height;
+		rand_cord(x, y);
 	}
 	// assgins the event pointer to new pointer
 	this->board[x][y].apply_event(e);
 }
 
+void game::insert_adventurer() {
+	int x, y;
+
+	//randomcordinates
+	rand_cord(x, y);
+
+	//check if room empty at cords
+	while(!this->board[x][y].empty_room()) {
+		rand_cord(x, y);
+	}
+
+	// insert adventurer at the cords and set rope where adventuer is placed
+	this->board[x][y].adventurer_status();
+	this->board[x][y].set_has_rope(true);
+}
+
 //game inserrt function
+void game::insert() {
+	//inserting events
+	insert_loco(new arrow);
+	insert_loco(new arrow);
+	insert_loco(new pit);
+	insert_loco(new pit);
+	insert_loco(new bats);
+	insert_loco(new bats);
+	insert_loco(new gold);
+	insert_loco(new wumpus);
+	// insert_loco(new rope);
+
+	// inserting adventueuer at start cords
+	insert_adventurer();
+}
+
+
 
 void game::display_game() const{
 	cout << endl << endl;
@@ -57,10 +99,13 @@ void game::display_game() const{
 		cout << "||";
 		for (int j = 0; j < this->width; ++j) {
 			// The first char indicates whether there is a player in the room
-			// at row index i, column index j. TODO If the room contains the
-			// player, print an asterisk ("*")
-
+			// at row index i, column index j. 
+			if (board[i][j].get_has_adventurer()) {
+				cout << "*";
+			} else {
 			// TODO else, print a space (" ")
+				cout << " ";
+			}
 
 			// The next char indicates the event in the room.
 			
@@ -70,6 +115,20 @@ void game::display_game() const{
 			// if (!this->debug || <i, j> ROOM DOES NOT HAVE EVENT) {
 			// 	cout << " ";
 			// }
+			// if the room does not have an event
+			if (board[i][j].empty_room()) {
+					cout << "  ||";
+			} else {
+				//if user choose debug mode
+				if(this->debug) {
+					//print char of certain event
+					board[i][j].print_event_sym();
+				} else {
+					cout << " ";
+				}
+				cout << " ||";
+
+			}
 			//
 			// TODO else, print the room's debug symbol. There are a few ways to
 			// do this. You can use polymorphism, or an event could have a
@@ -77,10 +136,9 @@ void game::display_game() const{
 			// get_debug_symbol() member function that you could call here
 			// to get the character and print it.
 
-			cout << " ||";
 		}
 		cout << endl;
-		cout << row_border << endl;
+	cout << row_border << endl;
 	}
 
 	//example output (when finished): 
@@ -95,20 +153,49 @@ void game::display_game() const{
 	// ----------------------
 }
 
+void game::adv_loco(int& x, int& y) const {
+	//go through rooms of vector
+	for (int i = 0; i < this->width; i++) {
+		for(int j = 0; j < this->height; j++) {
+			// if room has adventurer
+			if (this->board[i][j].get_has_adventurer()) {
+				// store and return cords
+				x = i;
+				y = j;
+				return;
+			}
+		}
+	}
+}
+
 bool game::check_win() const{
 	// TODO Delete the below placeholder code. Return true if the player
 	// has won the game. Return false otherwise.
+ if (alive) {
+	if (this->bgold) {
+		int x, y;
 
-	cout << "game::check_win() is not implemented..." << endl;
-	return false;
+		// func to find adventurer
+		adv_loco(x, y);
+
+		// if adventuer in a room with the rope, adventuer escapes and wins
+		if(board[x][y].get_has_rope()) {
+			cout << "You escaped with the gold! You win!" << endl;
+			return true;
+		}
+	}
+ }
+ return false;
 }
 
 bool game::check_lose() const{
 	// TODO Delete the below placeholder code. Return true if the player
 	// has lost the game. Return false otherwise.
-
-	cout << "game::check_lose() is not implemented..." << endl;
-	return false;
+	if (!alive) {
+		cout << "You died. Game over." << endl;
+		return true;
+	} 
+	return false; // adventuer is still alive
 }
 
 bool game::is_direction(char c) {
@@ -132,9 +219,25 @@ bool game::can_move_in_direction(char direction) {
 	// given direction so long as it wouldn't cause them to move off the
 	// grid.
 	
-	cout << "game::can_move_in_direction is not implemented..." <<
-		endl;
-	return true;
+	int x, y;
+	//get adventuer cords
+	adv_loco(x, y); 
+
+	int up_x = x;
+	int up_y = y;
+
+	//calcualte new position
+	if (direction == 'w') {
+		up_x -= 1;
+	} else if(direction == 'a') {
+		up_y -= 1;
+	} else if(direction == 's') {
+		up_x += 1;
+	} else if(direction == 'd') {
+		up_y += 1;
+	}
+	// check if position is within bounds
+	return up_x >= 0 && up_x < height && up_y >= 0 && up_y < width; 
 }
 
 bool game::is_valid_action(char action) {
@@ -242,7 +345,7 @@ void game::move(char direction) {
 		this->move_up();
 	} else if (direction == 'a') {
 		this->move_left();
-	} else if (direction == 's') {
+	} else if (direction == 'd') {
 		this->move_right();
 	} else {
 		this->move_down();
@@ -286,7 +389,7 @@ void game::fire_arrow(char direction) {
 		this->fire_arrow_up();
 	} else if (direction == 'a') {
 		this->fire_arrow_left();
-	} else if (direction == 's') {
+	} else if (direction == 'd') {
 		this->fire_arrow_right();
 	} else {
 		this->fire_arrow_down();
