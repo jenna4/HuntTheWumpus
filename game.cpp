@@ -372,14 +372,22 @@ void game::move_right() {
 	}
 }
 
+// make an array
+
 void game::move(char direction) {
+	char rand_moves[4] = {'w', 'a', 's', 'd'};
+	if (this->confused) {
+		int rdir = rand() % 4;
+		direction = rand_moves[rdir];
+		this->confused = false;
+	}
 	if (direction == 'w') {
 		this->move_up();
 	} else if (direction == 'a') {
 		this->move_left();
 	} else if (direction == 'd') {
 		this->move_right();
-	} else {
+	} else if (direction == 's') {
 		this->move_down();
 	}
 }
@@ -490,6 +498,7 @@ void game::play() {
 		// if adventurer has arrow, delte from board
 		if(barrow == true && board[x][y].get_event_sym() == "A") {
 			board[x][y].apply_event(nullptr);
+			this->num_arrows++;
 		}
 		// if adventurer picks up gold, delte form board
 		if(bgold == true && board[x][y].get_event_sym() == "G") {
