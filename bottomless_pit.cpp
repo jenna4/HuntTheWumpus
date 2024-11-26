@@ -19,7 +19,9 @@ pit::pit(const pit& p) {
 }
 
 void pit::percept() {
+    cout << endl;
     cout << "You feel a breeze." << endl;
+    cout << endl;
 }
 
 void pit::encounter(bool& blife) {

@@ -18,7 +18,9 @@ gold::gold(const gold& g) {
 }
 
 void gold::percept() {
+    cout << endl;
     cout << "You stub your toe on something heavy." << endl;
+    cout << endl;
 }
 
 void gold::encounter(bool& bgold) {

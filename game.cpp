@@ -635,6 +635,7 @@ void game::play_game(){
 		this->display_game();
 
 		// TODO Display precepts around player's location
+		p_percepts();
 
 		// Ask player for their action
 		char action = this->get_player_action();

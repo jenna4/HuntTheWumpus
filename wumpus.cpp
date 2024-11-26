@@ -16,7 +16,9 @@ wumpus::wumpus(const wumpus& w) {
 }
 
 void wumpus::percept() {
+    cout << endl;
     cout << "The hairs stand up on the back of your neck." << endl;
+    cout << endl;
 }
 
 void wumpus::encounter(bool& blife) {
