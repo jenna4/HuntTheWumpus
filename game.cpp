@@ -168,6 +168,22 @@ void game::adv_loco(int& x, int& y) const {
 	}
 }
 
+void game::wumpus_loco(int& x, int& y) const {
+	for (int i = 0; i < this->width; i++) {
+		for(int j = 0; j < this->height; j++) {
+			// if room is not empty
+			if (!this->board[i][j].empty_room()) {
+				// if wumpus is event in room
+				if(this->board[i][j].get_event_sym() == "W") {
+					x = i;
+					y = j;
+					return;
+				}
+			}
+		}
+	}
+}
+
 bool game::check_win() const{
 	// TODO Delete the below placeholder code. Return true if the player
 	// has won the game. Return false otherwise.
@@ -184,6 +200,11 @@ bool game::check_win() const{
 			return true;
 		}
 	}
+	if (!this->wumpus_alive) {
+		cout << "You win!" << endl;
+		return true;
+	}
+
  }
  return false;
 }
@@ -392,6 +413,21 @@ void game::move(char direction) {
 	}
 }
 
+void game::move_wump() {
+	int x, y;
+	cout << "------------------------------------" << endl;
+	cout << "The arrow awoke the Wumpus, causing it to move!" << endl;
+	cout << "------------------------------------" << endl;
+	// locate wumopus
+	wumpus_loco(x, y);
+	
+	// insert wumpus at new loco
+	insert_loco(new wumpus);
+
+	// delete room wumpus was in
+	this->board[x][y].apply_event(nullptr);
+}
+
 void game::fire_arrow_up() {
 	// TODO Delete the below placeholder code. Fire the arrow upward, killing
 	// the wumpus if it hits it or making the wumpus "wake up" and move
@@ -399,12 +435,20 @@ void game::fire_arrow_up() {
 	int x, y;
 	adv_loco(x, y);
 
-	for (int i = 3; i < 4; i++) {
+	for (int i = 1; i <= 3; i++) {
 		// if room is nto empty
-		if(!(this->board[x - 1][y].empty_room())) {
-			if (this->board[x - 1][y].get_event_sym() == "W") {
-				this->board[x -1][y].apply_event(nullptr);
+		int next_x = x - i;
+		if (next_x < 0) {
+			break; // stop if arrow goes out of bound
+		}
+		// check if room not emopty
+		if(!(this->board[next_x][y].empty_room())) {
+			// check if wumpus in room
+			if (this->board[next_x][y].get_event_sym() == "W") {
+				// removes wumpsu from baord
+				this->board[next_x][y].apply_event(nullptr);
 				cout << "You hit and killed the Wumpus!" << endl;
+				this->wumpus_alive = false;
 				// get out the function
 				return;
 			}
@@ -413,6 +457,7 @@ void game::fire_arrow_up() {
 	// if arrow misses
 	cout << "Your arrow missed." << endl;
 	// move wumpus 
+	move_wump();
 }
 
 void game::fire_arrow_down() {
@@ -501,7 +546,7 @@ void game::play() {
 			this->num_arrows++;
 		}
 		// if adventurer picks up gold, delte form board
-		if(bgold == true && board[x][y].get_event_sym() == "G") {
+		if(bgold == true && !board[x][y].empty_room() && board[x][y].get_event_sym() == "G") {
 			board[x][y].apply_event(nullptr);
 		}
 	}

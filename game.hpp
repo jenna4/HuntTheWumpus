@@ -20,6 +20,7 @@ private:
 	bool bgold = false;		// if adventuer has gold or not
 	bool confused = false;
 	bool barrow = false;
+	bool wumpus_alive = true; 
 
 	// TODO Feel free to add more member variables if you'd like
 
@@ -234,6 +235,8 @@ public:
 	void insert_loco(event* e);
 	void insert();
 	void adv_loco(int& x, int& y) const;
+	void wumpus_loco(int& x, int& y) const;
+	void move_wump();
 	void play();
 	void p_percepts();
 
