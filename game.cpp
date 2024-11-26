@@ -455,6 +455,7 @@ void game::fire_arrow_up() {
 		}
 	}
 	// if arrow misses
+	cout << endl;
 	cout << "Your arrow missed." << endl;
 	// move wumpus 
 	move_wump();
@@ -464,24 +465,99 @@ void game::fire_arrow_down() {
 	// TODO Delete the below placeholder code. Fire the arrow downward, killing
 	// the wumpus if it hits it or making the wumpus "wake up" and move
 	// randomly if it misses
-	
-	cout << "game::fire_arrow_down is not implemented..." << endl;
+	int x, y;
+	adv_loco(x, y);
+
+	for (int i = 1; i <= 3; i++) {
+		// if room is nto empty
+		int next_x = x + i;
+		if (next_x < 0) {
+			break; // stop if arrow goes out of bound
+		}
+		// check if room not emopty
+		if(!(this->board[next_x][y].empty_room())) {
+			// check if wumpus in room
+			if (this->board[next_x][y].get_event_sym() == "W") {
+				// removes wumpsu from baord
+				this->board[next_x][y].apply_event(nullptr);
+				cout << "You hit and killed the Wumpus!" << endl;
+				this->wumpus_alive = false;
+				// get out the function
+				return;
+			}
+		}
+	}
+	// if arrow misses
+	cout << endl;
+	cout << "Your arrow missed." << endl;
+	// move wumpus 
+	move_wump();
 }
 
 void game::fire_arrow_left() {
 	// TODO Delete the below placeholder code. Fire the arrow leftward, killing
 	// the wumpus if it hits it or making the wumpus "wake up" and move
 	// randomly if it misses
-	
-	cout << "game::fire_arrow_left is not implemented..." << endl;
+	int x, y;
+	adv_loco(x, y);
+
+	for (int i = 1; i <= 3; i++) {
+		// if room is nto empty
+		int next_y = y - i;
+		if (next_y < 0) {
+			break; // stop if arrow goes out of bound
+		}
+		// check if room not emopty
+		if(!(this->board[x][next_y].empty_room())) {
+			// check if wumpus in room
+			if (this->board[x][next_y].get_event_sym() == "W") {
+				// removes wumpsu from baord
+				this->board[x][next_y].apply_event(nullptr);
+				cout << "You hit and killed the Wumpus!" << endl;
+				this->wumpus_alive = false;
+				// get out the function
+				return;
+			}
+		}
+	}
+	// if arrow misses
+	cout << endl;
+	cout << "Your arrow missed." << endl;
+	// move wumpus 
+	move_wump();
 }
 
 void game::fire_arrow_right() {
 	// TODO Delete the below placeholder code. Fire the arrow rightward, killing
 	// the wumpus if it hits it or making the wumpus "wake up" and move
 	// randomly if it misses
-	
-	cout << "game::fire_arrow_right is not implemented..." << endl;
+	int x, y;
+	adv_loco(x, y);
+
+	for (int i = 1; i <= 3; i++) {
+		// if room is nto empty
+		int next_y = y + i;
+		if (next_y < 0) {
+			break; // stop if arrow goes out of bound
+		}
+		// check if room not emopty
+		if(!(this->board[x][next_y].empty_room())) {
+			// check if wumpus in room
+			if (this->board[x][next_y].get_event_sym() == "W") {
+				// removes wumpsu from baord
+				this->board[x][next_y].apply_event(nullptr);
+				cout << "You hit and killed the Wumpus!" << endl;
+				this->wumpus_alive = false;
+				// get out the function
+				return;
+			}
+		}
+	}
+	// if arrow misses
+	cout << endl;
+	cout << "Your arrow missed." << endl;
+	// move wumpus 
+	move_wump();
 }
 
 void game::fire_arrow(char direction) {
@@ -491,7 +567,7 @@ void game::fire_arrow(char direction) {
 		this->fire_arrow_left();
 	} else if (direction == 'd') {
 		this->fire_arrow_right();
-	} else {
+	} else if (direction == 's') {
 		this->fire_arrow_down();
 	}
 
