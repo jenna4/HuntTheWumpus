@@ -1,3 +1,14 @@
+/******************************************************
+** Program: Hunt the Wumpus
+** Author: Jenna Rivera
+** Date: 11/26/2024
+** Description: a program of a game set inside the cave of the Wumpus. The goal is to
+** guide the adventurer to either kill the Wumpus or find the hidden gold and make it back 
+** to the escape rope.
+** Input: width of the board, height of the board, direction or fire arrow, and the direction to fire arrow
+** Output: escape with the gold (win), get eaten by the wumpus (lose), kill the wumpus (win), fall in a pit (lose)
+******************************************************/
+
 #include <iostream>
 #include <cstdlib>
 #include <ctime>

@@ -229,15 +229,95 @@ public:
 	void play_game();
 
 	// TODO Add more member functions here
+
+	/*********************************************************************
+    ** Function: rand_cord(int& x, int& y)
+    ** Description: generates random coordinates within bounds of board 
+    ** Parameters: int& x, int& y
+    ** Pre-Conditions: width and height must be initialized 
+    ** Post-Conditions: the x and y variables are assigned random values within the bounds of the board
+    *********************************************************************/ 
 	void rand_cord(int& x, int& y);
+
+    /*********************************************************************
+    ** Function: apply_rope(event* rope)
+    ** Description: 
+    ** Parameters: event* rope
+    ** Pre-Conditions:
+    ** Post-Conditions:
+    *********************************************************************/ 
 	void apply_rope(event* rope);
+
+    /*********************************************************************
+    ** Function: insert_adventurer
+    ** Description: randomly places the adventurer in an empty room and places the escape rope there too
+    ** Parameters: none
+    ** Pre-Conditions: room object must exist 
+    ** Post-Conditions: adventurer is placed randomly in an empty room, the escape rope is placed in the same room
+    *********************************************************************/ 
 	void insert_adventurer();
+
+    /*********************************************************************
+    ** Function: insert_loco(event* e)
+    ** Description: randomly places an event in an empty room on the board
+    ** Parameters: event* e
+    ** Pre-Conditions: room object must exist 
+    ** Post-Conditions: event is placed in a randomly selected room
+    *********************************************************************/ 
 	void insert_loco(event* e);
+
+    /*********************************************************************
+    ** Function: insert()
+    ** Description: inserts events and the adventurer into random empty rooms
+    ** Parameters: none
+    ** Pre-Conditions: room object must exist
+    ** Post-Conditions: events and adventurer is randomly placed 
+    *********************************************************************/ 
 	void insert();
+
+    /*********************************************************************
+    ** Function: adv_loco(int& x, int& y) const
+    ** Description: finds the current location of the adventurer on board and stores the coords
+    ** Parameters: int& x, int& y
+    ** Pre-Conditions: room object must exist 
+    ** Post-Conditions: coords are updated with location of adventurer
+    *********************************************************************/ 
 	void adv_loco(int& x, int& y) const;
+
+    /*********************************************************************
+    ** Function: wumpus_loco(int& x, int& y) const
+    ** Description: finds the current location of the wumpus on board and stores the coords
+    ** Parameters: int& x, int& y
+    ** Pre-Conditions: room objects must exist 
+    ** Post-Conditions: coords are updated with location of wumpus
+    *********************************************************************/ 
 	void wumpus_loco(int& x, int& y) const;
+
+    /*********************************************************************
+    ** Function: move_wumpus()
+    ** Description: moves the wumpus to a new, rnadom locatiom on baord after it has been awakened by arrow
+    ** Parameters: none
+    ** Pre-Conditions: room object must exist
+    ** Post-Conditions: wumpus is moved to a new random location, previous room where wumpus was is cleared
+    *********************************************************************/ 
 	void move_wump();
+
+    /*********************************************************************
+    ** Function: play()
+    ** Description: executes the current turn in the game, processing the adventurer encoutners
+    ** Parameters: none
+    ** Pre-Conditions: room object must exist 
+    ** Post-Conditions: the adventurer encounters stuff 
+    *********************************************************************/ 
 	void play();
+
+    /*********************************************************************
+    ** Function: p_percepts()
+    ** Description: checks the rooms adjacent to adventurer and displays percepts
+    ** Parameters: none 
+    ** Pre-Conditions: adventurer's location must be known
+    ** Post-Conditions: the percepts of events adjacent to the adventurer are printed to terminal 
+    *********************************************************************/ 
 	void p_percepts();
 
 };
