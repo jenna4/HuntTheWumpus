@@ -9,6 +9,7 @@
 #include "wumpus.hpp"
 #include "escape_rope.hpp"
 #include "arrow.hpp"
+#include "hidden_passage.hpp"
 
 using std::cout;
 using std::cin;
@@ -66,6 +67,29 @@ void game::insert_adventurer() {
 	this->board[x][y].apply_event(new rope);
 }
 
+void game::warp_player(int& x, int& y) {
+	int x1, y1, x2, y2;
+	hidden_passage_loco(x1, y1, x2, y2);
+
+	// check which passage the adventurer  is at and warp to other
+	 if (x == x1 && y == y1) {
+		// remove adventuerer
+		board[x][y].adventurer_status();
+        x = x2;
+        y = y2;
+		// place adventurer in new loco
+		board[x][y].adventurer_status();
+    } else if (x == x2 && y == y2) {
+		// remove adventuerer
+		board[x][y].adventurer_status();
+        x = x1;
+        y = y1;
+		board[x][y].adventurer_status(); 
+    }
+	cout << "You got warped!" << endl;
+	bwarp = false;
+}
+
 //game inserrt function
 void game::insert() {
 	//inserting events
@@ -78,6 +102,8 @@ void game::insert() {
 	insert_loco(new gold);
 	insert_loco(new wumpus);
 	// insert_loco(new rope);
+	insert_loco(new hidden_passage);
+	insert_loco(new hidden_passage);
 
 	// inserting adventueuer at start cords
 	insert_adventurer();
@@ -183,6 +209,26 @@ void game::wumpus_loco(int& x, int& y) const {
 		}
 	}
 }
+
+void game::hidden_passage_loco(int& x1, int& y1, int& x2, int& y2) const {
+	bool found_first = false;
+ 	for (int i = 0; i < height; i++) {
+        	for (int j = 0; j < width; j++) {
+           	 if (!board[i][j].empty_room() && board[i][j].get_event_sym() == "H") {
+                	if (!found_first) {
+                    x1 = i;
+                    y1 = j;
+                    found_first = true;
+                	} else {
+                    x2 = i;
+                    y2 = j;
+                    return;  // Both hidden passages found
+                }
+            }
+        }
+    }
+}
+
 
 bool game::check_win() const{
 	// TODO Delete the below placeholder code. Return true if the player
@@ -413,6 +459,52 @@ void game::move(char direction) {
 	}
 }
 
+// void game::extramove_wump() {
+// 	int x, y;
+// 	wumpus_loco(x, y);
+
+// 	bool moved = false;
+
+// 	// check if there is an empty room to the north
+// 	if (x - 1 >= 0 && this->board[x - 1][y].empty_room() && !board[x][y].empty_room()) {
+// 		this->board[x - 1][y].apply_event(new wumpus); // places wumpus in new room
+// 		// removes wumpus in old room
+// 		this->board[x][y].apply_event(nullptr);
+// 		moved = true;
+// 	} 
+// 	// check if empty room to the south
+// 	else if (x + 1 < this->height && this->board[x + 1][y].empty_room() && !board[x][y].empty_room()) {
+		
+// 	    this->board[x + 1][y].apply_event(new wumpus);
+//         this->board[x][y].apply_event(nullptr);
+//         moved = true;
+// 	} 
+// 	// check if empty room to the west/rigt
+// 	else if (y - 1 >= 0 && this->board[x][y - 1].empty_room() && !board[x][y].empty_room()) {
+		
+// 		this->board[x][y - 1].apply_event(new wumpus);
+//         this->board[x][y].apply_event(nullptr);
+//         moved = true;
+// 	} 
+// 	// check if empty room to the east/left
+// 	else if (y + 1 < this->width && this->board[x][y + 1].empty_room() && !board[x][y].empty_room()) {
+
+// 		this->board[x][y + 1].apply_event(new wumpus);
+//         this->board[x][y].apply_event(nullptr);
+//         moved = true;
+// 	}
+
+// 	if (!moved) {
+// 		cout << endl;
+// 		cout << "Wumpus stayed in place." << endl;
+// 		cout << endl;
+// 	} else {
+// 		cout << endl;
+// 		cout << "Wumpus has moved." << endl;
+// 		cout << endl;
+// 	}
+// }
+
 void game::move_wump() {
 	int x, y;
 	cout << "------------------------------------" << endl;
@@ -614,8 +706,12 @@ void game::play() {
 	adv_loco(x, y);
 
 	if (!board[x][y].empty_room()) {
-		board[x][y].encounter(alive, bgold, confused, barrow);
+		board[x][y].encounter(alive, bgold, confused, barrow, bwarp);
 
+		if (bwarp == true && board[x][y].get_event_sym() == "H") {
+			// warp player if encounter passage
+			warp_player(x, y); 
+		}
 		// if adventurer has arrow, delte from board
 		if(barrow == true && board[x][y].get_event_sym() == "A") {
 			board[x][y].apply_event(nullptr);
@@ -652,5 +748,7 @@ void game::play_game(){
 		}
 		// TODO If the user is on a space with an event, trigger its encounter
 		play();
+
+		// extramove_wump();
 	}
 }

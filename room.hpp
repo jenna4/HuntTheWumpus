@@ -69,7 +69,7 @@ public:
     ** Post-Conditions: the room's pointer will point to a new event, and any old event if there is any will be deleted
     *********************************************************************/ 
 	void apply_event(event*);
-
+    event* get_event() const;
     /*********************************************************************
     ** Function: get_event_sym() const
     ** Description: returns the symbol associated with event in room
@@ -104,7 +104,7 @@ public:
     ** Pre-Conditions: room object mjst exist and four bools must exist 
     ** Post-Conditions: the certain encounter is triggered based on event symbol
     *********************************************************************/ 
-	void encounter(bool&, bool&, bool&, bool&);
+	void encounter(bool&, bool&, bool&, bool&, bool&);
 
     /*********************************************************************
     ** Function: Room()

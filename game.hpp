@@ -21,6 +21,7 @@ private:
 	bool confused = false;
 	bool barrow = false;
 	bool wumpus_alive = true; 
+	bool bwarp = false;
 
 	// TODO Feel free to add more member variables if you'd like
 
@@ -266,6 +267,8 @@ public:
     *********************************************************************/ 
 	void insert_loco(event* e);
 
+	void warp_player(int&x, int& y);
+
     /*********************************************************************
     ** Function: insert()
     ** Description: inserts events and the adventurer into random empty rooms
@@ -292,6 +295,7 @@ public:
     ** Post-Conditions: coords are updated with location of wumpus
     *********************************************************************/ 
 	void wumpus_loco(int& x, int& y) const;
+	void hidden_passage_loco(int& x1, int& y1, int& x2, int& y2) const;
 
     /*********************************************************************
     ** Function: move_wumpus()
@@ -301,6 +305,7 @@ public:
     ** Post-Conditions: wumpus is moved to a new random location, previous room where wumpus was is cleared
     *********************************************************************/ 
 	void move_wump();
+	// void extramove_wump();
 
     /*********************************************************************
     ** Function: play()

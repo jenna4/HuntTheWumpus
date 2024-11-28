@@ -76,6 +76,10 @@ bool Room::adventurer_status() {
     }
 }
 
+event* Room::get_event() const {
+    return this->e;
+}
+
 void Room::apply_event(event* eve) {
     //assigns new event to event pointer 
     delete this->e;
@@ -94,7 +98,7 @@ void Room::percept() {
     this->e->percept();
 }
 
-void Room::encounter(bool& blife, bool& bgold, bool& confused, bool& barrow) {
+void Room::encounter(bool& blife, bool& bgold, bool& confused, bool& barrow, bool& bwarp) {
     string sevent = e->get_sym();
 
     // if event is gold
@@ -128,6 +132,12 @@ void Room::encounter(bool& blife, bool& bgold, bool& confused, bool& barrow) {
         e->encounter(blife);
         cout << "------------------------------------" << endl;
     } // else if event is escape rope
+    else if (sevent == "H") {
+        cout << endl;
+        cout << "------------------------------------" << endl;
+        e->encounter(bwarp);
+        cout << "------------------------------------" << endl;
+    }
     else {
         cout << endl;
         cout << "------------------------------------" << endl;
