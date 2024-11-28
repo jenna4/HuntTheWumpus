@@ -10,6 +10,7 @@
 #include "escape_rope.hpp"
 #include "arrow.hpp"
 #include "hidden_passage.hpp"
+#include "lucky_ring.hpp"
 
 using std::cout;
 using std::cin;
@@ -104,6 +105,7 @@ void game::insert() {
 	// insert_loco(new rope);
 	insert_loco(new hidden_passage);
 	insert_loco(new hidden_passage);
+	insert_loco(new lucky_ring);
 
 	// inserting adventueuer at start cords
 	insert_adventurer();
@@ -706,14 +708,19 @@ void game::play() {
 	adv_loco(x, y);
 
 	if (!board[x][y].empty_room()) {
-		board[x][y].encounter(alive, bgold, confused, barrow, bwarp);
+		board[x][y].encounter(alive, bgold, confused, barrow, bwarp, bring);
+
+		if (bring == true && !board[x][y].empty_room() && board[x][y].get_event_sym() == "L") {
+			board[x][y].apply_event(nullptr); //remove the lucky ring from board
+			this->num_rings = 2;
+		}
 
 		if (bwarp == true && board[x][y].get_event_sym() == "H") {
 			// warp player if encounter passage
 			warp_player(x, y); 
 		}
 		// if adventurer has arrow, delte from board
-		if(barrow == true && board[x][y].get_event_sym() == "A") {
+		if(barrow == true && !board[x][y].empty_room() && board[x][y].get_event_sym() == "A") {
 			board[x][y].apply_event(nullptr);
 			this->num_arrows++;
 		}
@@ -721,8 +728,20 @@ void game::play() {
 		if(bgold == true && !board[x][y].empty_room() && board[x][y].get_event_sym() == "G") {
 			board[x][y].apply_event(nullptr);
 		}
-	}
 
+		if (!alive) {
+			if (bring && num_rings > 0) {
+				alive = true; // revive the adventurer
+				num_rings--; 
+				cout << "Revived by the Lucky Ring!" << endl;
+
+				if (num_rings == 0) {
+					bring = false;
+					cout << "The Lucky Ring has ran out!" << endl;
+				}
+			}
+		}
+	}
 }
 
 void game::play_game(){

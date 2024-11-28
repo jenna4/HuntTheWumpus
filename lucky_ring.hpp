@@ -1,63 +1,63 @@
-#ifndef HIDDEN_PASSAGE_HPP
-#define HIDDEN_PASSAGE_HPP
-#include "event.hpp"
+#ifndef LUCKY_RING_HPP
+#define LUCKY_RING_HPP
 #include <iostream>
-using namespace std;
+#include <string>
+#include "event.hpp" 
 
-class hidden_passage : public event {
+class lucky_ring : public event {
     public:
-
+    
     /*********************************************************************
     ** Function: percept()
     ** Description: prints percept
     ** Parameters: none
-    ** Pre-Conditions: passage object must exist
+    ** Pre-Conditions: ring object must exist
     ** Post-Conditions: prints percepts
     *********************************************************************/ 
     void percept();
 
     /*********************************************************************
     ** Function: encounter(bool&)
-    ** Description: displays message that adventurer that passage was found, set the bwarp bool to true
+    ** Description: displays message that adventurer that ring was found, set the bring bool to true
     ** Parameters: bool&
-    ** Pre-Conditions: passage object must exist 
+    ** Pre-Conditions: ring object must exist 
     ** Post-Conditions: displays message and sets bool to true
     *********************************************************************/  
     void encounter(bool&);
 
     /*********************************************************************
-    ** Function: hidden_passage()
-    ** Description: constructor for wumpus class, sets symbol to "H"
+    ** Function: lucky_ring()
+    ** Description: constructor for wumpus class, sets symbol to "L"
     ** Parameters: none 
-    ** Pre-Conditions: passage object must exist 
-    ** Post-Conditions: sets symbol to "H"
+    ** Pre-Conditions: ting object must exist 
+    ** Post-Conditions: sets symbol to "L"
     *********************************************************************/ 
-    hidden_passage();
+    lucky_ring();
 
     /*********************************************************************
-    ** Function: hidden_passage& operator=(const hidden_passage&);
-    ** Description: overload the assignment operator for the passage class
-    ** Parameters: const hidden_passage&
-    ** Pre-Conditions: passage object must exist
-    ** Post-Conditions: the current passage object has its symbol is updated to match the assigned passage object.
+    ** Function: lucky_ring& operator=(const lucky_ring& l);
+    ** Description: overload the assignment operator for the ring class
+    ** Parameters: const ring&
+    ** Pre-Conditions: ring object must exist
+    ** Post-Conditions: the current ring object has its symbol is updated to match the assigned ring object.
     *********************************************************************/ 
-    hidden_passage& operator=(const hidden_passage&);
+    lucky_ring& operator=(const lucky_ring& l);
 
     /*********************************************************************
-    ** Function: hidden_passage(const hidden_passage&)
-    ** Description: copy constructor for the passage class
-    ** Parameters: const passage&
-    ** Pre-Conditions: an passage object must exist
-    ** Post-Conditions: a new passage object is created with the same symbol
+    ** Function: lucky_ring(const lucky_ring& l)
+    ** Description: copy constructor for the lucky_ring class
+    ** Parameters: const lucky_ring&
+    ** Pre-Conditions: an ring object must exist
+    ** Post-Conditions: a new ring object is created with the same symbol
     *********************************************************************/ 
-    hidden_passage(const hidden_passage&);
+    lucky_ring(const lucky_ring& l);
 
     /*********************************************************************
     ** Function: clone()
-    ** Description: creates a new passage object as a copy of the current object
+    ** Description: creates a new ring object as a copy of the current object
     ** Parameters: none
-    ** Pre-Conditions: passage object must exist 
-    ** Post-Conditions: returns a pointer to a new passage object
+    ** Pre-Conditions: ring object must exist 
+    ** Post-Conditions: returns a pointer to a new ring object
     *********************************************************************/ 
     event* clone();
 
@@ -69,7 +69,7 @@ class hidden_passage : public event {
     ** Post-Conditions: returns the symbol as a string 
     *********************************************************************/ 
     string get_sym() const;
-};
 
+};
 
 #endif

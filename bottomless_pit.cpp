@@ -27,7 +27,6 @@ void pit::percept() {
 void pit::encounter(bool& blife) {
     cout << "You entered a room with a bottomless pit." << endl;
     int fall = rand() % 2;
-
     if(fall == 1) {
         cout << "You fell in the pit and died!" << endl;
         blife = false;

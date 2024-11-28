@@ -98,7 +98,7 @@ void Room::percept() {
     this->e->percept();
 }
 
-void Room::encounter(bool& blife, bool& bgold, bool& confused, bool& barrow, bool& bwarp) {
+void Room::encounter(bool& blife, bool& bgold, bool& confused, bool& barrow, bool& bwarp, bool& bring) {
     string sevent = e->get_sym();
 
     // if event is gold
@@ -136,6 +136,12 @@ void Room::encounter(bool& blife, bool& bgold, bool& confused, bool& barrow, boo
         cout << endl;
         cout << "------------------------------------" << endl;
         e->encounter(bwarp);
+        cout << "------------------------------------" << endl;
+    }
+    else if (sevent == "L") {
+        cout << endl;
+        cout << "------------------------------------" << endl;
+        e->encounter(bring);
         cout << "------------------------------------" << endl;
     }
     else {

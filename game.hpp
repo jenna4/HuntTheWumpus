@@ -22,6 +22,8 @@ private:
 	bool barrow = false;
 	bool wumpus_alive = true; 
 	bool bwarp = false;
+	bool bring = false;
+	int num_rings = 0;
 
 	// TODO Feel free to add more member variables if you'd like
 

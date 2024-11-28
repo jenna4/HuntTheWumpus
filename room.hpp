@@ -104,7 +104,7 @@ public:
     ** Pre-Conditions: room object mjst exist and four bools must exist 
     ** Post-Conditions: the certain encounter is triggered based on event symbol
     *********************************************************************/ 
-	void encounter(bool&, bool&, bool&, bool&, bool&);
+	void encounter(bool&, bool&, bool&, bool&, bool&, bool&);
 
     /*********************************************************************
     ** Function: Room()
