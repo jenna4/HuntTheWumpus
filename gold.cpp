@@ -3,7 +3,6 @@
 #include <string>
 using namespace std;
 
-// TODO Gold implementation (define gold member functions below)
 gold::gold() {
     this->symbol = "G";
 }

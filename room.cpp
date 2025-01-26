@@ -1,6 +1,5 @@
 #include "room.hpp"
 
-// TODO Room implementation (define room member functions below)
 Room::Room() {
     this->e = nullptr;
     this->has_adventurer = false;

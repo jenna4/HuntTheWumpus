@@ -1,7 +1,5 @@
 #include "wumpus.hpp"
 
-// TODO Wumpus implementation (define wumpus member functions below)
-
 wumpus::wumpus() {
     this->symbol = "W";
 }

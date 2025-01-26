@@ -4,8 +4,6 @@
 #include <iostream>
 using namespace std;
 
-// TODO Wumpus interface (define the wumpus class and declare its member
-// functions below)
 class wumpus : public event {
     public:
 

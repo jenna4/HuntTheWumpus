@@ -6,10 +6,7 @@ using namespace std;
 
 // Event interface
 class event {
-private:
-	// TODO private members, if relevant
 protected:
-	// TODO protected members, if relevant
 	string symbol;
 public:
 	/*********************************************************************

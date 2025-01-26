@@ -23,15 +23,13 @@ game::game(int width, int height, bool debug) :
 		width(width),
 		height(height),
 		debug(debug) {
-	// TODO Create the game board: 2D vector of room objects
 	board = vector<vector<Room> >(height, vector<Room>(width));
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
 			board[i][j] = Room();
 		}
 	}
-	// TODO Randomly insert events (2 bat_swarms, 2 bottomless_pits,
-	// 1 wumpus, 1 gold, 2 arrows, 1 escape rope) into the board
+
 	insert();
 }
 
@@ -131,18 +129,9 @@ void game::display_game() const{
 			if (board[i][j].get_has_adventurer()) {
 				cout << "*";
 			} else {
-			// TODO else, print a space (" ")
 				cout << " ";
 			}
 
-			// The next char indicates the event in the room.
-			
-			// TODO If debug mode is disabled OR the room at location <i, j>
-			// does not have an event, print a space (" ")
-			// For example:
-			// if (!this->debug || <i, j> ROOM DOES NOT HAVE EVENT) {
-			// 	cout << " ";
-			// }
 			// if the room does not have an event
 			if (board[i][j].empty_room()) {
 					cout << "  ||";
@@ -157,28 +146,11 @@ void game::display_game() const{
 				cout << " ||";
 
 			}
-			//
-			// TODO else, print the room's debug symbol. There are a few ways to
-			// do this. You can use polymorphism, or an event could have a
-			// char debug_symbol member variable and some sort of
-			// get_debug_symbol() member function that you could call here
-			// to get the character and print it.
-
 		}
 		cout << endl;
 	cout << row_border << endl;
 	}
 
-	//example output (when finished): 
-	// ----------------------
-	// || P || G || P ||   ||
-	// ----------------------
-	// ||   || W ||   || S ||
-	// ----------------------   
-	// ||   ||   ||   || S ||
-	// ----------------------   
-	// ||*  ||   ||   ||   ||
-	// ----------------------
 }
 
 void game::adv_loco(int& x, int& y) const {
@@ -233,8 +205,6 @@ void game::hidden_passage_loco(int& x1, int& y1, int& x2, int& y2) const {
 
 
 bool game::check_win() const{
-	// TODO Delete the below placeholder code. Return true if the player
-	// has won the game. Return false otherwise.
  if (alive) {
 	if (this->bgold) {
 		int x, y;
@@ -258,8 +228,6 @@ bool game::check_win() const{
 }
 
 bool game::check_lose() const{
-	// TODO Delete the below placeholder code. Return true if the player
-	// has lost the game. Return false otherwise.
 	if (!alive) {
 		cout << "You died. Game over." << endl;
 		return true;
@@ -282,11 +250,6 @@ char game::to_lower(char direction) {
 }
 
 bool game::can_move_in_direction(char direction) {
-	// TODO Delete the below placeholder code. Return true if the player can
-	// move in the given direction ('w' for up, 'a' for left, 's' for down,
-	// 'd' for right). Return false otherwise. The player can move in the
-	// given direction so long as it wouldn't cause them to move off the
-	// grid.
 	
 	int x, y;
 	//get adventuer cords
@@ -382,8 +345,7 @@ char game::get_arrow_fire_direction() {
 }
 
 void game::move_up() {
-	// TODO Delete the below placeholder code. Move the player up one
-	// space in the grid, however you choose to do that.
+
 	int x, y;
 	// get adventurer location
 	adv_loco(x, y);
@@ -399,8 +361,7 @@ void game::move_up() {
 }
 
 void game::move_down() {
-	// TODO Delete the below placeholder code. Move the player down one
-	// space in the grid, however you choose to do that.
+
 	int x, y;
 	adv_loco(x, y);
 
@@ -413,8 +374,7 @@ void game::move_down() {
 }
 
 void game::move_left() {
-	// TODO Delete the below placeholder code. Move the player left one
-	// space in the grid, however you choose to do that.
+
 	int x, y;
 	adv_loco(x, y);
 
@@ -428,8 +388,7 @@ void game::move_left() {
 }
 
 void game::move_right() {
-	// TODO Delete the below placeholder code. Move the player right one
-	// space in the grid, however you choose to do that.
+
 	int x, y;
 	adv_loco(x, y);
 
@@ -440,8 +399,6 @@ void game::move_right() {
 		cout << "You cannot move right" << endl;
 	}
 }
-
-// make an array
 
 void game::move(char direction) {
 	char rand_moves[4] = {'w', 'a', 's', 'd'};
@@ -461,52 +418,6 @@ void game::move(char direction) {
 	}
 }
 
-// void game::extramove_wump() {
-// 	int x, y;
-// 	wumpus_loco(x, y);
-
-// 	bool moved = false;
-
-// 	// check if there is an empty room to the north
-// 	if (x - 1 >= 0 && this->board[x - 1][y].empty_room() && !board[x][y].empty_room()) {
-// 		this->board[x - 1][y].apply_event(new wumpus); // places wumpus in new room
-// 		// removes wumpus in old room
-// 		this->board[x][y].apply_event(nullptr);
-// 		moved = true;
-// 	} 
-// 	// check if empty room to the south
-// 	else if (x + 1 < this->height && this->board[x + 1][y].empty_room() && !board[x][y].empty_room()) {
-		
-// 	    this->board[x + 1][y].apply_event(new wumpus);
-//         this->board[x][y].apply_event(nullptr);
-//         moved = true;
-// 	} 
-// 	// check if empty room to the west/rigt
-// 	else if (y - 1 >= 0 && this->board[x][y - 1].empty_room() && !board[x][y].empty_room()) {
-		
-// 		this->board[x][y - 1].apply_event(new wumpus);
-//         this->board[x][y].apply_event(nullptr);
-//         moved = true;
-// 	} 
-// 	// check if empty room to the east/left
-// 	else if (y + 1 < this->width && this->board[x][y + 1].empty_room() && !board[x][y].empty_room()) {
-
-// 		this->board[x][y + 1].apply_event(new wumpus);
-//         this->board[x][y].apply_event(nullptr);
-//         moved = true;
-// 	}
-
-// 	if (!moved) {
-// 		cout << endl;
-// 		cout << "Wumpus stayed in place." << endl;
-// 		cout << endl;
-// 	} else {
-// 		cout << endl;
-// 		cout << "Wumpus has moved." << endl;
-// 		cout << endl;
-// 	}
-// }
-
 void game::move_wump() {
 	int x, y;
 	cout << "------------------------------------" << endl;
@@ -523,9 +434,7 @@ void game::move_wump() {
 }
 
 void game::fire_arrow_up() {
-	// TODO Delete the below placeholder code. Fire the arrow upward, killing
-	// the wumpus if it hits it or making the wumpus "wake up" and move
-	// randomly if it misses
+
 	int x, y;
 	adv_loco(x, y);
 
@@ -556,9 +465,7 @@ void game::fire_arrow_up() {
 }
 
 void game::fire_arrow_down() {
-	// TODO Delete the below placeholder code. Fire the arrow downward, killing
-	// the wumpus if it hits it or making the wumpus "wake up" and move
-	// randomly if it misses
+
 	int x, y;
 	adv_loco(x, y);
 
@@ -589,9 +496,7 @@ void game::fire_arrow_down() {
 }
 
 void game::fire_arrow_left() {
-	// TODO Delete the below placeholder code. Fire the arrow leftward, killing
-	// the wumpus if it hits it or making the wumpus "wake up" and move
-	// randomly if it misses
+
 	int x, y;
 	adv_loco(x, y);
 
@@ -622,9 +527,7 @@ void game::fire_arrow_left() {
 }
 
 void game::fire_arrow_right() {
-	// TODO Delete the below placeholder code. Fire the arrow rightward, killing
-	// the wumpus if it hits it or making the wumpus "wake up" and move
-	// randomly if it misses
+
 	int x, y;
 	adv_loco(x, y);
 
@@ -749,7 +652,7 @@ void game::play_game(){
 		// Print game board
 		this->display_game();
 
-		// TODO Display precepts around player's location
+		//Display precepts around player's location
 		p_percepts();
 
 		// Ask player for their action
@@ -765,9 +668,7 @@ void game::play_game(){
 			char direction = this->get_arrow_fire_direction();
 			this->fire_arrow(direction);
 		}
-		// TODO If the user is on a space with an event, trigger its encounter
 		play();
 
-		// extramove_wump();
 	}
 }

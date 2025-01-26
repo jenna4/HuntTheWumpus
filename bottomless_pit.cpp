@@ -3,8 +3,6 @@
 #include <string>
 using namespace std;
 
-// TODO Bottomless Pit implementation (define bottomless_pit member functions
-// below)
 pit::pit() {
     this->symbol = "P";
 }

@@ -1,6 +1,5 @@
 #include "arrow.hpp"
 
-// TODO Arrow implementation (define arrow member functions below)
 arrow::arrow() {
     this->symbol = "A";
 }

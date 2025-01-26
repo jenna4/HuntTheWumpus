@@ -6,8 +6,6 @@ using namespace std;
 #include <cstdlib>
 #include <ctime>
 
-// TODO Bottomless Pit interface (define the bottomless_pit class and declare
-// its member functions below)
 class pit : public event {
     public: 
 

@@ -5,8 +5,6 @@
 #include <string>
 using namespace std;
 
-// TODO Gold interface (define the gold class and declare its member functions
-// below)
 class gold : public event {
     public:
 

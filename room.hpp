@@ -6,13 +6,11 @@
 // Room interface
 class Room {
 private: 
-	// TODO private members
 	event* e;
 	bool has_adventurer;
 	bool has_rope;
 
 public:
-	// TODO public members
 
     /*********************************************************************
     ** Function: get_has_adventurer() const

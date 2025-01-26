@@ -4,8 +4,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
-// TODO Arrow interface (define the arrow class and declare its member functions
-// below)
+
 class arrow : public event {
     public:
 

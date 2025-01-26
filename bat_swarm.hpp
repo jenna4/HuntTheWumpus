@@ -3,8 +3,7 @@
 #include <iostream>
 #include "event.hpp"
 using namespace std;
-// TODO Bat Swarm interface (define the bat_swarm class and declare its member
-// functions below)
+
 class bats : public event {
     public:
 

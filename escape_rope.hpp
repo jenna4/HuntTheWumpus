@@ -5,8 +5,6 @@
 #include <string>
 using namespace std;
 
-// TODO Escape rope interface (define the escape_rope class and declare its
-// member functions below)
 class rope : public event {
     public:
 
